@@ -16,9 +16,9 @@ export default class ReviewsController {
         review,
         date
       );
-      let error = ReviewResponse;
+      let { error } = ReviewResponse;
       if (error) {
-        return res.json(error);
+        return res.json({ error });
       }
       res.json({ status: "success" });
     } catch (e) {
@@ -41,7 +41,7 @@ export default class ReviewsController {
       if (error) {
         res.json({ error });
       }
-      if (ReviewResponse.modifedCount === 0) {
+      if (ReviewResponse.modifiedCount === 0) {
         throw new Error(
           "unable to update review. User may not be original poster"
         );
@@ -60,6 +60,11 @@ export default class ReviewsController {
       let { error } = ReviewResponse;
       if (error) {
         res.json({ error });
+      }
+      if (ReviewResponse.deletedCount === 0) {
+        throw new Error(
+          "unable to delete review. User may not be original poster"
+        );
       }
       res.json({ status: "success " });
     } catch (e) {
