@@ -47,7 +47,7 @@ export default class MoviesDAO {
 
   static async getMovieById(id) {
     try {
-      return await movies
+      const agg = await movies
         .aggregate([
           {
             $match: { _id: new ObjectId(id) },
@@ -61,10 +61,12 @@ export default class MoviesDAO {
             },
           },
         ])
-        .next();
+        .toArray();
+      console.log(agg);
+      return agg[0];
     } catch (error) {
-      console.error(`something went wrong in getMovieById: ${e}`);
-      throw e;
+      console.error(`something went wrong in getMovieById: ${error}`);
+      throw error;
     }
   }
 
@@ -74,8 +76,8 @@ export default class MoviesDAO {
       ratings = await movies.distinct("rated");
       return ratings;
     } catch (error) {
-      console.error(`unable to get ratings, ${e}`);
-      return ratings;
+      console.error(`unable to get ratings, ${error}`);
+      throw error;
     }
   }
 }

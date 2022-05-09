@@ -41,7 +41,7 @@ export default class MoviesController {
       res.json(movie);
     } catch (error) {
       console.error(`api error: ${error}`);
-      res.status(500).json({ error: e });
+      res.status(500).json({ error });
     }
   }
 
@@ -51,7 +51,7 @@ export default class MoviesController {
       res.json(propertyTypes);
     } catch (error) {
       console.error(`api error: ${error}`);
-      res.status(500).json({ error: e });
+      res.status(500).json({ error });
     }
   }
 }
